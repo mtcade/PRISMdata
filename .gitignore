@@ -1,0 +1,24 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# macOS
+.DS_Store
+
+# marimo
+__marimo__/
+
+# pytest
+.pytest_cache/
+
+# data, hosted on Zenodo -- see scripts/fetch_data.py
+data.zip
+data/*
+!data/README.md
