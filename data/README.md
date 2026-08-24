@@ -58,8 +58,20 @@ bundle this trial was generated from (see `index.parquet`).
 
 ### `importances/{bundle_id}.parquet`
 
-Per-feature importance scores from a single importance method, for a
-single trial. One row per feature (`p` rows).
+Per-feature importance scores for a single trial, from one **or more**
+importance methods. Usually `p` rows (one method, one row per feature),
+but sometimes `2*p` rows: `torch_grip2` and `torch_prism` are two
+importance measures read off the *same* trained model (one grip2-style
+group-norm score, one PRISM-style local-gradient score), so the pipeline
+computes and writes both into one bundle file -- confirmed in ~20-40% of
+trial bundles in the `continuous`/`count`/`categorical` outcomes. **Do
+not assume one `importance_method` per file** or take its first row as
+"the" method -- `feature_idx` repeats once per method present, so a naive
+`{feature_idx: importance}` dict built without grouping by
+`importance_method` first will silently keep only one method's values.
+`prismdata.transforms.importances_to_dict` handles this correctly (keyed
+by `importance_method`); use it rather than reading this table directly
+unless you also group by `importance_method` yourself.
 
 | column | type | description |
 |---|---|---|
@@ -67,20 +79,23 @@ single trial. One row per feature (`p` rows).
 | `feature_idx` | `UInt32` | which `X`/`Xk` column (`0`..`p-1`) this row scores. |
 | `importance` | `Float32` | importance score for the original feature. |
 | `importance_k` | `Float32` | importance score for that feature's knockoff copy. |
-| `importance_method` | `Utf8` | the method used, constant within a file. Methods observed in this data: `LASSO`, `ranger_gini`, `torch_grip2`, `torch_prism_torch`, `xgb_prism`, `xgb_score`. |
+| `importance_method` | `Utf8` | which method this row belongs to — group by this column, don't assume it's constant. Methods observed in this data: `LASSO`, `ranger_gini`, `torch_grip2`, `torch_prism`, `xgb_prism`, `xgb_score`. |
 
 ### `selections/{bundle_id}.parquet`
 
 FDR-controlled feature selections derived from one `importances` file, at
-one target FDR level. One row per feature (`p` rows).
+one target FDR level. Same one-or-more-methods caveat as `importances/`
+above applies here (a shared-fit bundle has `2*p` rows, one set per
+method) — use `prismdata.transforms.selections_to_dict`, or group by
+`importance_method` yourself.
 
 | column | type | description |
 |---|---|---|
 | `par_bundle_idn` | `Binary` | this bundle's own id — redundant with the filename. |
-| `fdr_target` | `Float32` | target false-discovery-rate level, constant within a file (`0.2` throughout the current data). |
+| `fdr_target` | `Float32` | target false-discovery-rate level for this row's method (`0.2` throughout the current data). |
 | `feature_idx` | `UInt32` | which `X`/`Xk` column (`0`..`p-1`) this row is about. |
 | `selected` | `Boolean` | whether the feature was selected at `fdr_target`. |
-| `importance_method` | `Utf8` | the importance method the selection was derived from, constant within a file. |
+| `importance_method` | `Utf8` | which method this row's selection was derived from — group by this column, don't assume it's constant. |
 
 ## Per-outcome tables
 
@@ -145,7 +160,17 @@ In `y`:
 - `p_relevant_prob`
 - `magnitude`
 
-In `importances`/`selections`: method hyperparameters; name varies by `importance_method` and `fdr`/`offset`
+In `importances`: `method` (names the underlying model fit -- **not**
+necessarily the same string as either row's `importance_method` column in
+`importances.parquet`/`selections.parquet`; `torch_grip2` and
+`torch_prism` both fit one shared model and both log
+`method="torch_prism_grip2"` here, since it's genuinely one fit producing
+two importance measures -- see `importances/{bundle_id}.parquet` above.
+Always dispatch on the `importance_method` column, never on this `method`
+parameter) plus method-specific hyperparameters (name varies by fit).
+
+In `selections`: `fdr`/`offset` (same values as the `fdr_target` column
+in `selections.parquet`, under prismdata/pipeline-internal names).
 
 ### `results.parquet`
 
