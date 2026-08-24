@@ -13,12 +13,13 @@ Fetch it with:
 uv run python scripts/fetch_data.py
 ```
 
-This downloads `data.zip`, verifies its SHA-256 checksum
-(`b9e632421711cf72f7526f53d304adacda5fbc448660758218e1b9818b0c14db`),
-extracts it into `data/`, and deletes the zip. Re-running is safe --
-an existing `data.zip` with a matching checksum is reused rather than
-re-downloaded. See `scripts/fetch_data.py --help` for options
-(`--keep-zip`, overriding the URL/checksum, extracting elsewhere).
+This downloads `data.zip`, verifies its checksums --
+SHA-256 `b9e632421711cf72f7526f53d304adacda5fbc448660758218e1b9818b0c14db`,
+MD5 `09a15e6d1907958ff283712c84386369` -- extracts it into `data/`, and
+deletes the zip. Re-running is safe -- an existing `data.zip` with
+matching checksums is reused rather than re-downloaded. See
+`scripts/fetch_data.py --help` for options (`--keep-zip`, overriding the
+URL/checksums, extracting elsewhere).
 
 Once downloaded, the data layout is
 
