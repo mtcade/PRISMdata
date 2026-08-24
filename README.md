@@ -14,7 +14,7 @@ uv run python scripts/fetch_data.py
 ```
 
 This downloads `data.zip`, verifies its SHA-256 checksum
-(`b97056e94993986bd8c908a25d0bc519164b04e7c29d50374c051a92b6eb0414`),
+(`b9e632421711cf72f7526f53d304adacda5fbc448660758218e1b9818b0c14db`),
 extracts it into `data/`, and deletes the zip. Re-running is safe --
 an existing `data.zip` with a matching checksum is reused rather than
 re-downloaded. See `scripts/fetch_data.py --help` for options

@@ -21,7 +21,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 
 # DOI 10.5281/zenodo.22085306
 ZENODO_URL = "https://zenodo.org/records/22085306/files/data.zip?download=1"
-SHA256 = "b97056e94993986bd8c908a25d0bc519164b04e7c29d50374c051a92b6eb0414"
+SHA256 = "b9e632421711cf72f7526f53d304adacda5fbc448660758218e1b9818b0c14db"
 
 
 def sha256_of(path: Path) -> str:
