@@ -1,6 +1,6 @@
 [project]
 name = "prismdata"
-version = "0.1.0"
+version = "0.1.1"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
@@ -21,7 +21,7 @@ notebooks = [
     "marimo>=0.23.13",
 ]
 reproduce = [
-    "heteroknockoffpy",
+    "heteroknockoffpy>=0.2.2",
 ]
 
 [tool.uv.sources]
