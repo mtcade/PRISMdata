@@ -21,8 +21,5 @@ notebooks = [
     "marimo>=0.23.13",
 ]
 reproduce = [
-    "heteroknockoffpy>=0.2.2",
+    "heteroknockoffpy>=0.3.0",
 ]
-
-[tool.uv.sources]
-heteroknockoffpy = { workspace = true }
