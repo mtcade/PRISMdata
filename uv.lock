@@ -299,7 +299,7 @@ wheels = [
 
 [[package]]
 name = "heteroknockoffpy"
-version = "0.3.0"
+version = "0.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "knockpy" },
@@ -314,9 +314,9 @@ dependencies = [
     { name = "torch" },
     { name = "xgboost" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e7/52/e984a40279270accc4d58203ef2f7961e35b351300f7621ced47ab7d622c/heteroknockoffpy-0.3.0.tar.gz", hash = "sha256:d86f1aee1fd81e00951180a91fd1bc2d186b91d82ba075d55f9cab647025794c", size = 103697, upload-time = "2026-08-24T21:07:46.691Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8c/bc/1cc6d81294bdcd3d632b59457e526039bf349629f7f7341a05bbf57cca4d/heteroknockoffpy-0.4.0.tar.gz", hash = "sha256:06c81dd79779b8ea6c6345fd25d43dd705342aa6e008fecb62f93f2ef474c72f", size = 110160, upload-time = "2026-10-23T20:20:30.114Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b5/b6/cd3b1373881ac78cca7da7c7e6481dfcadda1187b18e80efbaad6d3cd54c/heteroknockoffpy-0.3.0-py3-none-any.whl", hash = "sha256:049bd3a8aea90affc27988b1621b6480912bb3e8816dd6a86b846d2ed56c9d99", size = 123429, upload-time = "2026-08-24T21:07:47.748Z" },
+    { url = "https://files.pythonhosted.org/packages/44/1e/fc735081daea7f21d9b5de0fe1a514c45c888db3b4b8ce1c5aa072514ed9/heteroknockoffpy-0.4.0-py3-none-any.whl", hash = "sha256:581fd9960df73a0fe7e5c30133ac257b29ce1c4573b5dae72e5ce4d89c0b0294", size = 129615, upload-time = "2026-10-23T20:20:31.048Z" },
 ]
 
 [[package]]
@@ -1011,7 +1011,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [{ name = "pytest", specifier = ">=9.1.1" }]
 notebooks = [{ name = "marimo", specifier = ">=0.23.13" }]
-reproduce = [{ name = "heteroknockoffpy", specifier = ">=0.3.0" }]
+reproduce = [{ name = "heteroknockoffpy", specifier = ">=0.4.0" }]
 
 [[package]]
 name = "psutil"
