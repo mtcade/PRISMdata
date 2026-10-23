@@ -63,7 +63,7 @@ importance methods. Usually `p` rows (one method, one row per feature),
 but sometimes `2*p` rows: `torch_grip2` and `torch_prism` are two
 importance measures read off the *same* trained model (one grip2-style
 group-norm score, one PRISM-style local-gradient score), so the pipeline
-computes and writes both into one bundle file -- confirmed in ~20-40% of
+computes and writes both into one bundle file -- about a third to a half of
 trial bundles in the `continuous`/`count`/`categorical` outcomes. **Do
 not assume one `importance_method` per file** or take its first row as
 "the" method -- `feature_idx` repeats once per method present, so a naive
@@ -79,7 +79,7 @@ unless you also group by `importance_method` yourself.
 | `feature_idx` | `UInt32` | which `X`/`Xk` column (`0`..`p-1`) this row scores. |
 | `importance` | `Float32` | importance score for the original feature. |
 | `importance_k` | `Float32` | importance score for that feature's knockoff copy. |
-| `importance_method` | `Utf8` | which method this row belongs to — group by this column, don't assume it's constant. Methods observed in this data: `LASSO`, `ranger_gini`, `torch_grip2`, `torch_prism`, `xgb_prism`, `xgb_score`. |
+| `importance_method` | `Utf8` | which method this row belongs to — group by this column, don't assume it's constant. Methods observed in this data: `LASSO`, `ranger_gini`, `torch_grip2`, `torch_prism`, `xgb_prism`. |
 
 ### `selections/{bundle_id}.parquet`
 
@@ -114,9 +114,9 @@ bundle it was generated from.
 | `par_bundle_idn` | `Binary` | this row's own bundle id. |
 | `par_stage` | `Utf8` | `"X"`, `"Xk"`, or `"trial"`. |
 | `trial_idx` | `Int64` | reserved; always null in the current data. |
-| `X_path` | `Utf8` | absolute path (on the generating machine) to the source `X` bundle. Only the filename (basename) is meaningful here — use it to look up `X/{basename}`. Null except on `trial` rows. |
+| `X_path` | `Utf8` | path to the source `X` bundle, relative to `data/{outcome}/` (e.g. `X/{bundle_id}.parquet`). Null except on `trial` rows. |
 | `Xk_path` | `Utf8` | as `X_path`, for the source `Xk` bundle. |
-| `y_path` | `Utf8` | path whose basename equals this row's own `par_bundle_idn` — i.e. `y/{bundle_id}.parquet`. Null except on `trial` rows. |
+| `y_path` | `Utf8` | path relative to `data/{outcome}/` whose basename equals this row's own `par_bundle_idn` — i.e. `y/{bundle_id}.parquet`. Null except on `trial` rows. |
 | `importances_path` | `Utf8` | as `y_path`, for `importances/{bundle_id}.parquet`. |
 | `selections_path` | `Utf8` | as `y_path`, for `selections/{bundle_id}.parquet`. |
 | `model_path` | `Utf8` | reserved; always null in the current data. |

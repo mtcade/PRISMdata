@@ -236,7 +236,7 @@ def test_heteroknockoffpy_kwargs_nests_xgb_model_kwargs(importance_method):
 
 @pytest.mark.parametrize(
     "importance_method",
-    ("LASSO", "ranger_gini", "torch_grip2", "torch_prism", "xgb_prism", "xgb_score"),
+    ("LASSO", "ranger_gini", "torch_grip2", "torch_prism", "xgb_prism"),
 )
 def test_heteroknockoffpy_kwargs_actually_works_against_heteroknockoffpy(importance_method):
     """Integration check: every method's prepared kwargs must actually run
@@ -250,7 +250,6 @@ def test_heteroknockoffpy_kwargs_actually_works_against_heteroknockoffpy(importa
         "torch_grip2": heteroknockoffpy_importance.grip2Importances,
         "torch_prism": heteroknockoffpy_importance.torchPrismImportances,
         "xgb_prism": heteroknockoffpy_importance.xgbPrismImportances,
-        "xgb_score": heteroknockoffpy_importance.xgbImportances,
     }
 
     outcome = "linear" if importance_method == "LASSO" else "continuous"

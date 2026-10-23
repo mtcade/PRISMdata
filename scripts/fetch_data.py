@@ -21,8 +21,8 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 
 # DOI 10.5281/zenodo.22085306
 ZENODO_URL = "https://zenodo.org/records/22085306/files/data.zip?download=1"
-SHA256 = "b9e632421711cf72f7526f53d304adacda5fbc448660758218e1b9818b0c14db"
-MD5 = "09a15e6d1907958ff283712c84386369"
+SHA256 = "1865a0f3bb6fb917298c5a26b13939ed4eeb7eb021b6d6c0ecccadb538000de3"
+MD5 = "a4dce505b02f60d876d057486de4e9d3"
 
 
 def _digest_of(path: Path, algorithm: str) -> str:

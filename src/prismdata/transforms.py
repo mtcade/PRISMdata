@@ -52,7 +52,7 @@ feature). But ``"torch_grip2"`` and ``"torch_prism"`` are two
 importance measures read off the *same* trained model -- one grip2-style
 group-norm score, one PRISM-style local-gradient score -- so the pipeline
 computes them together and writes both into one bundle file (confirmed:
-~20-40% of trial bundles in the ``continuous``/``count``/``categorical``
+a third to a half of trial bundles in the ``continuous``/``count``/``categorical``
 outcomes; verified across all of them). Never assume a bundle has exactly
 one method or take ``df["importance_method"][0]`` as *the* method for the
 whole frame -- that silently drops the other method's rows (same

@@ -14,8 +14,8 @@ uv run python scripts/fetch_data.py
 ```
 
 This downloads `data.zip`, verifies its checksums --
-SHA-256 `b9e632421711cf72f7526f53d304adacda5fbc448660758218e1b9818b0c14db`,
-MD5 `09a15e6d1907958ff283712c84386369` -- extracts it into `data/`, and
+SHA-256 `1865a0f3bb6fb917298c5a26b13939ed4eeb7eb021b6d6c0ecccadb538000de3`,
+MD5 `a4dce505b02f60d876d057486de4e9d3` -- extracts it into `data/`, and
 deletes the zip. Re-running is safe -- an existing `data.zip` with
 matching checksums is reused rather than re-downloaded. See
 `scripts/fetch_data.py --help` for options (`--keep-zip`, overriding the
@@ -116,7 +116,7 @@ trial's own bundle only owns its `y`/`importances`/`selections` -- the
 to), and it exposes `importances`/`selections` keyed by
 `importance_method` -- **almost always one key, but sometimes two**:
 `torch_grip2` and `torch_prism` are two importance measures read
-off one shared trained model, so ~20-40% of `continuous`/`count`/
+off one shared trained model, so a third to a half of `continuous`/`count`/
 `categorical` trial bundles hold both under one bundle id. Always iterate
 these dict keys; never assume exactly one method, and never dispatch on
 `parameters["importances"]["method"]` (it names the shared *fit*, e.g.
@@ -147,8 +147,8 @@ present on this trial. `tb["parameters"]["importances"]` isn't directly
 forwardable as keyword arguments -- besides bookkeeping keys
 (`method`/`standardize_y`) that aren't real parameters,
 `torch_grip2`/`torch_prism` need a computed `layers` list instead of the
-three ratio/count values that are actually stored, and `xgb_prism`/
-`xgb_score` need their xgboost hyperparameters nested under a
+three ratio/count values that are actually stored, and `xgb_prism`
+needs its xgboost hyperparameters nested under a
 `model_kwargs` dict rather than passed top-level (passed top-level, they
 silently reach `XGBRegressor.fit()` instead of the constructor and raise
 `TypeError`). `transforms.heteroknockoffpy_kwargs()` does all of this
@@ -161,7 +161,6 @@ DISPATCH = {
     "torch_grip2": importance.grip2Importances,
     "torch_prism": importance.torchPrismImportances,
     "xgb_prism": importance.xgbPrismImportances,
-    "xgb_score": importance.xgbImportances,
 }
 
 results = {}
